@@ -15,13 +15,13 @@ class iOSTestV2Tests: XCTestCase {
     
     var testViewModel: UserViewModel!
 
-
     override func setUp() {
         super.setUp()
         
-        
         testViewModel = UserViewModel()
         testViewModel.jwtToken = "12345"
+        testViewModel.userDetails = User(context: testViewModel.context)
+
     }
     
     override func tearDown() {
@@ -63,7 +63,8 @@ class iOSTestV2Tests: XCTestCase {
         userDictionary["magicNumber"] = 1400000
         userDictionary["magicHash"] = "Magic"
 
-        testViewModel.saveUserDetails(userDetails: userDictionary) { (isSuccess, errorMsg) in
+        testViewModel.userDetails.id = 198
+        testViewModel.saveUserDetails(userDictionary: userDictionary) { (isSuccess, errorMsg) in
             isAbleToSave = isSuccess
         }
         
@@ -74,6 +75,8 @@ class iOSTestV2Tests: XCTestCase {
     func test_getData(){
         var isAbleToFetch = false
         
+        testViewModel.userDetails.id = 198
+
         testViewModel.fetchUserDetails { (isSuccess, errorMsg) in
             isAbleToFetch = isSuccess
         }
